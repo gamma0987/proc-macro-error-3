@@ -1,8 +1,7 @@
 # v3.0.1 (2026-06-08)
 
 - Fix broken links in cargo metadata and README
-- Publish `proc-macro-error-attr3-test-suite` as package to crates.io to make
-  `cargo package` work.
+- Fix minimal version requirements of all dependencies
 
 # v3.0.0 (2026-06-08)
 
