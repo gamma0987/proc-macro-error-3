@@ -30,7 +30,7 @@ _Supports rustc 1.61 and up_
 >
 > This is a maintained fork of
 > [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2), which
-> is itself a maintained fork of
+> itself was a fork of
 > [`proc-macro-error`](https://github.com/CreepySkeleton/proc-macro-error). The
 > goal is to keep the crate maintained while preserving the original API and
 > behavior as much as possible.

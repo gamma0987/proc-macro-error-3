@@ -1,3 +1,14 @@
+# v3.0.0 (2026-06-08)
+
+- **Crate renamed from `proc-macro-error2` to `proc-macro-error3`.**
+- Attribute crate renamed from `proc-macro-error-attr2` to
+  `proc-macro-error-attr3`.
+- Fixed `pub_use_of_private_extern_crate` future-incompatibility warning
+  ([`rust-lang/rust#127909`](https://github.com/rust-lang/rust/issues/127909))
+  by making the `proc_macro` extern crate public
+- Fixed swapped rustdoc links for `emit_call_site_warning!` and
+  `emit_call_site_error!` and fixed other broken links in the README.
+
 # v2.0.1 (2024-09-06)
 
 - Fixed a span location issue due to mistake in refactoring (#2)

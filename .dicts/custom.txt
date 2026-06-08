@@ -16,3 +16,4 @@ MSRV
 trololo
 RUSTFLAGS
 compl
+rustdoc
