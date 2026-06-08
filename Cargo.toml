@@ -19,17 +19,13 @@ edition = "2021"
 
 [dependencies]
 proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.0.1" }
-proc-macro2 = "1"
-quote = "1"
-
-[dependencies.syn]
-default-features = false
-optional = true
-version = "2"
+proc-macro2 = "1.0.74"
+quote = "1.0.35"
+syn = { version = "2.0.46", optional = true, default-features = false }
 
 [dev-dependencies]
 proc-macro-error3-test-suite = { path = "./test-crate", version = "=3.0.1" }
-syn = { version = "2", features = ["full"] }
+syn = { version = "2.0.46", features = ["full"] }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]

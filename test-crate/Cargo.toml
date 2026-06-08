@@ -18,12 +18,9 @@ proc-macro = true
 
 [dependencies]
 proc-macro-error3 = { path = "../", version = "=3.0.1" }
-proc-macro2 = "1"
-quote = "1"
-
-[dependencies.syn]
-features = ["full"]
-version = "2"
+proc-macro2 = "1.0.74"
+quote = "1.0.35"
+syn = { version = "2.0.46", features = ["full"] }
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }

@@ -16,8 +16,8 @@ repository = "https://github.com/gamma0987/proc-macro-error3"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "1"
-quote = "1"
+proc-macro2 = "1.0.74"
+quote = "1.0.35"
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
