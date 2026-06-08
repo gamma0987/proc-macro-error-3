@@ -1,5 +1,6 @@
 **/*.rs.bk
 .fuse_hidden*
+.opencode/
 
 #--------------------------------------------------#
 # The following was generated with gitignore.nvim: #
