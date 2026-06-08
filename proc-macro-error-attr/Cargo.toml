@@ -4,12 +4,13 @@ version = "3.0.0"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",
+  "gamma0987 <gamma0987@posteo.de>",
 ]
 edition = "2021"
 rust-version = "1.61"
 description = "Attribute macro for the proc-macro-error3 crate"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/GnomedDev/proc-macro-error-3"
+repository = "https://github.com/gamma0987/proc-macro-error3"
 
 [lib]
 proc-macro = true

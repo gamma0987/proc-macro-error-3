@@ -3,10 +3,11 @@ name = "proc-macro-error3"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",
+  "gamma0987 <gamma0987@posteo.de>",
 ]
 version = "3.0.0"
 description = "Almost drop-in replacement to panics in proc-macros"
-repository = "https://github.com/GnomedDev/proc-macro-error-3"
+repository = "https://github.com/gamma0987/proc-macro-error3"
 rust-version = "1.61"
 keywords = ["proc-macro", "error", "errors"]
 categories = ["development-tools::procedural-macro-helpers"]

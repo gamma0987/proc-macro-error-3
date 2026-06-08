@@ -276,7 +276,7 @@ be dual licensed as above, without any additional terms or conditions.
 [`proc_macro::Diagnostic`]:
     https://doc.rust-lang.org/proc_macro/struct.Diagnostic.html
 [crate::dummy]:
-    https://docs.rs/proc-macro-error3/latest/proc_macro_error3/dummy.html
+    https://docs.rs/proc-macro-error3/latest/proc_macro_error3/dummy/index.html
 [`abort_call_site!`]:
     https://docs.rs/proc-macro-error3/latest/proc_macro_error3/macro.abort_call_site.html
 [`abort!`]:
