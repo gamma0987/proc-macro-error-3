@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: RUSTFLAGS='--cfg run_ui_tests' cargo +stable test ui
+      - run: cargo +stable test --features __ui_tests ui
 
   test-fmt:
     runs-on: ubuntu-latest
