@@ -28,8 +28,8 @@ optional = true
 version = "2"
 
 [dev-dependencies]
+proc-macro-error3-test-suite = { path = "./test-crate", version = "=3.0.1" }
 syn = { version = "2", features = ["full"] }
-test-crate = { path = "./test-crate" }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]

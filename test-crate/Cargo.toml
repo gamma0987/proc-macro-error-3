@@ -1,19 +1,23 @@
 [package]
-name = "test-crate"
-version = "0.0.0"
+name = "proc-macro-error3-test-suite"
+version = "3.0.1"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",
+  "gamma0987 <gamma0987@posteo.de>",
 ]
+description = "Test suite for proc-macro-error3"
+repository = "https://github.com/gamma0987/proc-macro-error3"
+rust-version = "1.61"
+license = "MIT OR Apache-2.0"
 edition = "2021"
-publish = false
 
 [lib]
 path = "lib.rs"
 proc-macro = true
 
 [dependencies]
-proc-macro-error3 = { path = "../" }
+proc-macro-error3 = { path = "../", version = "=3.0.1" }
 proc-macro2 = "1"
 quote = "1"
 
