@@ -29,6 +29,7 @@ error: This is an error
          = help: simple hint
          = note: simple yay
          = note: format note
+         = note: format trailing comma
          = note: Some note
          = note: spanned simple note
          = note: spanned format note

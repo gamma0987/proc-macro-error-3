@@ -1,8 +1,8 @@
 [package]
 name = "proc-macro-error2"
 authors = [
-    "CreepySkeleton <creepy-skeleton@yandex.ru>",
-    "GnomedDev <david2005thomas@gmail.com>",
+  "CreepySkeleton <creepy-skeleton@yandex.ru>",
+  "GnomedDev <david2005thomas@gmail.com>",
 ]
 version = "2.0.1"
 description = "Almost drop-in replacement to panics in proc-macros"
@@ -14,24 +14,24 @@ license = "MIT OR Apache-2.0"
 edition = "2021"
 
 [dependencies]
-quote = "1"
-proc-macro2 = "1"
 proc-macro-error-attr2 = { path = "./proc-macro-error-attr", version = "=2.0.0" }
+proc-macro2 = "1"
+quote = "1"
 
 [dependencies.syn]
-version = "2"
-optional = true
 default-features = false
+optional = true
+version = "2"
 
 [dev-dependencies]
-test-crate = { path = "./test-crate" }
 syn = { version = "2", features = ["full"] }
+test-crate = { path = "./test-crate" }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]
 default = ["syn-error"]
-syn-error = ["dep:syn"]
 nightly = []
+syn-error = ["dep:syn"]
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(run_ui_tests)'] }

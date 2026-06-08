@@ -87,6 +87,8 @@ pub fn abort_notes(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 
     let some_note = Some("Some note");
     let none_note: Option<&'static str> = None;
+    let trailing = "trailing";
+    let comma = "comma";
 
     abort! {
         span, "This is {} error", "an";
@@ -97,6 +99,7 @@ pub fn abort_notes(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         yay = "simple yay";
 
         note = "format {}", "note";
+        note = "format {} {}", trailing, comma,;
 
         note =? some_note;
         note =? none_note;

@@ -11,7 +11,7 @@ use crate::{
 
 pub fn abort_if_dirty() {
     check_correctness();
-    if IS_DIRTY.with(|c| c.get()) {
+    if IS_DIRTY.with(Cell::get) {
         abort_now()
     }
 }
@@ -60,9 +60,9 @@ pub(crate) fn emit_diagnostic(diag: Diagnostic) {
         res = res.span_error(span, msg);
     }
 
-    res.emit()
+    res.emit();
 }
 
 thread_local! {
-    static IS_DIRTY: Cell<bool> = Cell::new(false);
+    static IS_DIRTY: Cell<bool> = const { Cell::new(false) };
 }

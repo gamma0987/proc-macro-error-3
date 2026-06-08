@@ -2,8 +2,8 @@
 name = "test-crate"
 version = "0.0.0"
 authors = [
-    "CreepySkeleton <creepy-skeleton@yandex.ru>",
-    "GnomedDev <david2005thomas@gmail.com>",
+  "CreepySkeleton <creepy-skeleton@yandex.ru>",
+  "GnomedDev <david2005thomas@gmail.com>",
 ]
 edition = "2021"
 publish = false
@@ -14,12 +14,12 @@ proc-macro = true
 
 [dependencies]
 proc-macro-error2 = { path = "../" }
-quote = "1"
 proc-macro2 = "1"
+quote = "1"
 
 [dependencies.syn]
-version = "2"
 features = ["full"]
+version = "2"
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
