@@ -1,0 +1,8 @@
+# Prettier configuration
+# Uses .editorconfig for printWidth, indent, etc.
+# This file only sets Prettier-specific options not supported by EditorConfig
+
+[[overrides]]
+files = "*.md"
+[overrides.options]
+proseWrap = "always"

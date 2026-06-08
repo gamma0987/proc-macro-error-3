@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "dictionaries": ["custom"],
+  "dictionaryDefinitions": [
+    {
+      "name": "custom",
+      "path": "./.dicts/custom.txt",
+      "addWords": true
+    }
+  ],
+  "readonly": true,
+  "enableGlobDot": true,
+  "useGitignore": true,
+  "ignorePaths": [
+    "**/.git/",
+    "**/.gitignore",
+    ".git",
+    "**/Cargo.lock",
+    "**/*.svg"
+  ]
+}
