@@ -1,12 +1,12 @@
 [package]
-name = "proc-macro-error2"
+name = "proc-macro-error3"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",
 ]
-version = "2.0.1"
+version = "3.0.0"
 description = "Almost drop-in replacement to panics in proc-macros"
-repository = "https://github.com/GnomedDev/proc-macro-error-2"
+repository = "https://github.com/GnomedDev/proc-macro-error-3"
 rust-version = "1.61"
 keywords = ["proc-macro", "error", "errors"]
 categories = ["development-tools::procedural-macro-helpers"]
@@ -14,7 +14,7 @@ license = "MIT OR Apache-2.0"
 edition = "2021"
 
 [dependencies]
-proc-macro-error-attr2 = { path = "./proc-macro-error-attr", version = "=2.0.0" }
+proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.0.0" }
 proc-macro2 = "1"
 quote = "1"
 

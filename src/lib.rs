@@ -1,4 +1,4 @@
-//! # proc-macro-error2
+//! # proc-macro-error3
 //!
 //! This crate aims to make error reporting in proc-macros simple and easy to use.
 //! Migrate from `panic!`-based errors for as little effort as possible!
@@ -21,7 +21,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! proc-macro-error2 = { version = "2.0.0", default-features = false }
+//! proc-macro-error3 = { version = "3.0.0", default-features = false }
 //! ```
 //!
 //! ***Please note that disabling this feature makes sense only if you don't depend on `syn`
@@ -206,7 +206,7 @@
 //! > If you have some type from `proc_macro` or `syn` to point to, do not call `.span()`
 //! > on it but rather use it directly:
 //! > ```no_run
-//! > # use proc_macro_error2::abort;
+//! > # use proc_macro_error3::abort;
 //! > # let input = proc_macro2::TokenStream::new();
 //! > let ty: syn::Type = syn::parse2(input).unwrap();
 //! > abort!(ty, "BOOM");
@@ -281,7 +281,7 @@ pub use crate::{
     diagnostic::{Diagnostic, DiagnosticExt, Level},
     dummy::{append_dummy, set_dummy},
 };
-pub use proc_macro_error_attr2::proc_macro_error;
+pub use proc_macro_error_attr3::proc_macro_error;
 
 use proc_macro2::Span;
 use quote::{quote, ToTokens};
@@ -483,7 +483,7 @@ struct AbortNow;
 fn check_correctness() {
     assert!(
         ENTERED_ENTRY_POINT.with(Cell::get) != 0,
-        "proc-macro-error2 API cannot be used outside of `entry_point` invocation, \
+        "proc-macro-error3 API cannot be used outside of `entry_point` invocation, \
              perhaps you forgot to annotate your #[proc_macro] function with `#[proc_macro_error]"
     );
 }

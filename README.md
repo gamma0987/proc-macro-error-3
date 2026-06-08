@@ -1,6 +1,6 @@
 # Makes error reporting in procedural macros nice and easy
 
-[![docs.rs](https://docs.rs/proc-macro-error2/badge.svg)](https://docs.rs/proc-macro-error2)
+[![docs.rs](https://docs.rs/proc-macro-error3/badge.svg)](https://docs.rs/proc-macro-error3)
 [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 
 This crate aims to make error reporting in proc-macros simple and easy to use.
@@ -21,7 +21,7 @@ future-proof.
 
 ```toml
 [dependencies]
-proc-macro-error2 = "2.0"
+proc-macro-error3 = "3.0"
 ```
 
 _Supports rustc 1.61 and up_
@@ -88,7 +88,7 @@ And this is what your users will see in their IDE:
 ### Panic-like usage
 
 ```rust
-use proc_macro_error2::{
+use proc_macro_error3::{
     proc_macro_error,
     abort,
     abort_call_site,
@@ -135,7 +135,7 @@ pub fn make_answer(input: TokenStream) -> TokenStream {
 ### `proc_macro::Diagnostic`-like usage
 
 ```rust
-use proc_macro_error2::*;
+use proc_macro_error3::*;
 use proc_macro::TokenStream;
 use syn::{spanned::Spanned, DeriveInput, ItemStruct, Fields, Attribute , parse_macro_input};
 use quote::quote;
@@ -276,9 +276,9 @@ be dual licensed as above, without any additional terms or conditions.
 [`proc_macro::Diagnostic`]:
     https://doc.rust-lang.org/proc_macro/struct.Diagnostic.html
 [crate::dummy]:
-    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/dummy.html
+    https://docs.rs/proc-macro-error3/latest/proc_macro_error3/dummy.html
 [`abort_call_site!`]:
-    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/macro.abort_call_site.html
+    https://docs.rs/proc-macro-error3/latest/proc_macro_error3/macro.abort_call_site.html
 [`abort!`]:
-    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/macro.abort.html
-[guide]: https://docs.rs/proc-macro-error2
+    https://docs.rs/proc-macro-error3/latest/proc_macro_error3/macro.abort.html
+[guide]: https://docs.rs/proc-macro-error3

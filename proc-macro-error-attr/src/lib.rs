@@ -1,5 +1,5 @@
 //! This is `#[proc_macro_error]` attribute to be used with
-//! [`proc-macro-error`](https://docs.rs/proc-macro-error2/). There you go.
+//! [`proc-macro-error`](https://docs.rs/proc-macro-error3/). There you go.
 
 use crate::parse::parse_input;
 use crate::parse::Attribute;
@@ -93,7 +93,7 @@ fn gen_body(block: &TokenTree, settings: &Settings) -> proc_macro2::TokenStream 
         quote!(|| #block)
     };
 
-    quote!( ::proc_macro_error2::entry_point(#closure, #is_proc_macro_hack) )
+    quote!( ::proc_macro_error3::entry_point(#closure, #is_proc_macro_hack) )
 }
 
 fn detect_proc_macro_hack(attrs: &[Attribute]) -> bool {

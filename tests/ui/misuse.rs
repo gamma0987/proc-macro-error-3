@@ -1,4 +1,4 @@
-use proc_macro_error2::abort;
+use proc_macro_error3::abort;
 
 struct Foo;
 
