@@ -1,3 +1,6 @@
+[workspace]
+members = ["test-crate", "proc-macro-error-attr"]
+
 [package]
 name = "proc-macro-error3"
 authors = [

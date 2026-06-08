@@ -63,7 +63,7 @@ pub(crate) struct Settings(Vec<Setting>);
 
 impl Settings {
     pub(crate) fn is_set(&self, setting: Setting) -> bool {
-        self.0.iter().any(|s| *s == setting)
+        self.0.contains(&setting)
     }
 
     pub(crate) fn set(&mut self, setting: Setting) {
