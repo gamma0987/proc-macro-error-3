@@ -6,7 +6,9 @@
   "MD013": false,
   "no-hard-tabs": false,
   "MD033": {
-    "allowed_elements": ["h1", "div", "a", "br", "img"]
+    "allowed_elements": ["h1", "div", "a", "br", "img", "p", "sup", "sub"]
   },
-  "MD024": false
+  "MD024": false,
+  "MD036": false,
+  "MD045": false
 }

@@ -6,40 +6,46 @@
 This crate aims to make error reporting in proc-macros simple and easy to use.
 Migrate from `panic!`-based errors for as little effort as possible!
 
-Also, you can explicitly [append a dummy token stream][crate::dummy] to your errors.
+Also, you can explicitly [append a dummy token stream][crate::dummy] to your
+errors.
 
-To achieve this, this crate serves as a tiny shim around `proc_macro::Diagnostic` and
-`compile_error!`. It detects the most preferable way to emit errors based on compiler's version.
-When the underlying diagnostic type is finally stabilized, this crate will be simply
-delegating to it, requiring no changes in your code!
+To achieve this, this crate serves as a tiny shim around
+`proc_macro::Diagnostic` and `compile_error!`. It detects the most preferable
+way to emit errors based on compiler's version. When the underlying diagnostic
+type is finally stabilized, this crate will be simply delegating to it,
+requiring no changes in your code!
 
-So you can just use this crate and have *both* some of `proc_macro::Diagnostic` functionality
-available on stable ahead of time and your error-reporting code future-proof.
+So you can just use this crate and have _both_ some of `proc_macro::Diagnostic`
+functionality available on stable ahead of time and your error-reporting code
+future-proof.
 
 ```toml
 [dependencies]
 proc-macro-error2 = "2.0"
 ```
 
-*Supports rustc 1.61 and up*
+_Supports rustc 1.61 and up_
 
 > **NOTE**
 >
-> This is a maintained fork of [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2),
-> which is itself a maintained fork of [`proc-macro-error`](https://github.com/CreepySkeleton/proc-macro-error).
-> The goal is to keep the crate maintained while preserving the original API and behavior as much as possible.
+> This is a maintained fork of
+> [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2), which
+> is itself a maintained fork of
+> [`proc-macro-error`](https://github.com/CreepySkeleton/proc-macro-error). The
+> goal is to keep the crate maintained while preserving the original API and
+> behavior as much as possible.
 >
 > Notable changes from `proc-macro-error` to `proc-macro-error-2`:
 >
 > - Upgraded `syn` to `2`.
 > - Raised the MSRV to `1.61`.
-> - Removed automatic nightly detection; use the `nightly` feature for improved diagnostics.
+> - Removed automatic nightly detection; use the `nightly` feature for improved
+>   diagnostics.
 >
 > Notable changes in this fork compared to `proc-macro-error-2`:
 >
 > - Fixed the future-incompatibility warning from
 >   [`rust-lang/rust#127909`](https://github.com/rust-lang/rust/issues/127909)
-
 
 [Documentation and guide][guide]
 
@@ -174,74 +180,84 @@ pub fn make_answer(input: TokenStream) -> TokenStream {
 
 ## Real world examples
 
-* [`structopt-derive`](https://github.com/TeXitoi/structopt/tree/master/structopt-derive)
+- [`structopt-derive`](https://github.com/TeXitoi/structopt/tree/master/structopt-derive)
   (abort-like usage)
-* [`auto-impl`](https://github.com/auto-impl-rs/auto_impl/) (emit-like usage)
+- [`auto-impl`](https://github.com/auto-impl-rs/auto_impl/) (emit-like usage)
 
 ## Limitations
 
 - Warnings are emitted only on nightly, they are ignored on stable.
-- "help" suggestions can't have their own span info on stable,
-  (essentially inheriting the parent span).
-- If your macro happens to trigger a panic, no errors will be displayed. This is not a
-  technical limitation but rather intentional design. `panic` is not for error reporting.
+- "help" suggestions can't have their own span info on stable, (essentially
+  inheriting the parent span).
+- If your macro happens to trigger a panic, no errors will be displayed. This is
+  not a technical limitation but rather intentional design. `panic` is not for
+  error reporting.
 
 ## MSRV policy
 
-The MSRV is currently `1.61`, and this is considered a breaking change to increase.
+The MSRV is currently `1.61`, and this is considered a breaking change to
+increase.
 
-However, if an existing dependency requires a higher MSRV without a semver breaking update, this may be raised.
+However, if an existing dependency requires a higher MSRV without a semver
+breaking update, this may be raised.
 
 ## Motivation
 
-Error handling in proc-macros sucks. There's not much of a choice today:
-you either "bubble up" the error up to the top-level of the macro and convert it to
-a [`compile_error!`][compl_err] invocation or just use a good old panic. Both these ways suck:
+Error handling in proc-macros sucks. There's not much of a choice today: you
+either "bubble up" the error up to the top-level of the macro and convert it to
+a [`compile_error!`][compl_err] invocation or just use a good old panic. Both
+these ways suck:
 
 - Former sucks because it's quite redundant to unroll a proper error handling
-    just for critical errors that will crash the macro anyway; so people mostly
-    choose not to bother with it at all and use panic. Simple `.expect` is too tempting.
+  just for critical errors that will crash the macro anyway; so people mostly
+  choose not to bother with it at all and use panic. Simple `.expect` is too
+  tempting.
 
-    Also, if you do decide to implement this `Result`-based architecture in your macro
-    you're going to have to rewrite it entirely once [`proc_macro::Diagnostic`][] is finally
-    stable. Not cool.
+    Also, if you do decide to implement this `Result`-based architecture in your
+    macro you're going to have to rewrite it entirely once
+    [`proc_macro::Diagnostic`][] is finally stable. Not cool.
 
 - Later sucks because there's no way to carry out the span info via `panic!`.
-    `rustc` will highlight the invocation itself but not some specific token inside it.
+  `rustc` will highlight the invocation itself but not some specific token
+  inside it.
 
-    Furthermore, panics aren't for error-reporting at all; panics are for bug-detecting
-    (like unwrapping on `None` or out-of-range indexing) or for early development stages
-    when you need a prototype ASAP so error handling can wait. Mixing these usages only
-    messes things up.
+    Furthermore, panics aren't for error-reporting at all; panics are for
+    bug-detecting (like unwrapping on `None` or out-of-range indexing) or for
+    early development stages when you need a prototype ASAP so error handling
+    can wait. Mixing these usages only messes things up.
 
-- There is [`proc_macro::Diagnostic`][] which is awesome but it has been experimental
-    for more than a year and is unlikely to be stabilized any time soon.
+- There is [`proc_macro::Diagnostic`][] which is awesome but it has been
+  experimental for more than a year and is unlikely to be stabilized any time
+  soon.
 
-    This crate's API is intentionally designed to be compatible with `proc_macro::Diagnostic`
-    and delegates to it whenever possible. Once `Diagnostics` is stable this crate
-    will **always** delegate to it, no code changes will be required on user side.
+    This crate's API is intentionally designed to be compatible with
+    `proc_macro::Diagnostic` and delegates to it whenever possible. Once
+    `Diagnostics` is stable this crate will **always** delegate to it, no code
+    changes will be required on user side.
 
 That said, we need a solution, but this solution must meet these conditions:
 
-- It must be better than `panic!`. The main point: it must offer a way to carry the span information
-    over to user.
-- It must take as little effort as possible to migrate from `panic!`. Ideally, a new
-    macro with similar semantics plus ability to carry out span info.
+- It must be better than `panic!`. The main point: it must offer a way to carry
+  the span information over to user.
+- It must take as little effort as possible to migrate from `panic!`. Ideally, a
+  new macro with similar semantics plus ability to carry out span info.
 - It must maintain compatibility with [`proc_macro::Diagnostic`][] .
 - **It must be usable on stable**.
 
-This crate aims to provide such a mechanism. All you have to do is annotate your top-level
-`#[proc_macro]` function with `#[proc_macro_error]` attribute and change panics to
-[`abort!`]/[`abort_call_site!`] where appropriate, see [the Guide][guide].
+This crate aims to provide such a mechanism. All you have to do is annotate your
+top-level `#[proc_macro]` function with `#[proc_macro_error]` attribute and
+change panics to [`abort!`]/[`abort_call_site!`] where appropriate, see [the
+Guide][guide].
 
 ## Disclaimer
-Please note that **this crate is not intended to be used in any way other
-than error reporting in procedural macros**, use `Result` and `?` (possibly along with one of the
-many helpers out there) for anything else.
+
+Please note that **this crate is not intended to be used in any way other than
+error reporting in procedural macros**, use `Result` and `?` (possibly along
+with one of the many helpers out there) for anything else.
 
 <br>
 
-#### License
+### License
 
 <sup>
 Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
@@ -256,13 +272,13 @@ for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
 be dual licensed as above, without any additional terms or conditions.
 </sub>
 
-
 [compl_err]: https://doc.rust-lang.org/std/macro.compile_error.html
-[`proc_macro::Diagnostic`]: https://doc.rust-lang.org/proc_macro/struct.Diagnostic.html
-
-[crate::dummy]: https://docs.rs/proc-macro-error2/1/proc_macro_error/dummy/index.html
-[crate::multi]: https://docs.rs/proc-macro-error2/1/proc_macro_error/multi/index.html
-
-[`abort_call_site!`]: https://docs.rs/proc-macro-error2/1/proc_macro_error/macro.abort_call_site.html
-[`abort!`]: https://docs.rs/proc-macro-error2/1/proc_macro_error/macro.abort.html
+[`proc_macro::Diagnostic`]:
+    https://doc.rust-lang.org/proc_macro/struct.Diagnostic.html
+[crate::dummy]:
+    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/dummy.html
+[`abort_call_site!`]:
+    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/macro.abort_call_site.html
+[`abort!`]:
+    https://docs.rs/proc-macro-error2/latest/proc_macro_error2/macro.abort.html
 [guide]: https://docs.rs/proc-macro-error2
