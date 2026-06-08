@@ -1,6 +1,6 @@
 [package]
 name = "proc-macro-error-attr3"
-version = "3.0.0"
+version = "3.0.1"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",

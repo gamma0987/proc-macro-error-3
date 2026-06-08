@@ -5,7 +5,7 @@ authors = [
   "GnomedDev <david2005thomas@gmail.com>",
   "gamma0987 <gamma0987@posteo.de>",
 ]
-version = "3.0.0"
+version = "3.0.1"
 description = "Almost drop-in replacement to panics in proc-macros"
 repository = "https://github.com/gamma0987/proc-macro-error3"
 rust-version = "1.61"
@@ -15,7 +15,7 @@ license = "MIT OR Apache-2.0"
 edition = "2021"
 
 [dependencies]
-proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.0.0" }
+proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.0.1" }
 proc-macro2 = "1"
 quote = "1"
 

@@ -1,3 +1,7 @@
+# v3.0.1 (2026-06-08)
+
+- Fix dead links in the cargo metadata and README
+
 # v3.0.0 (2026-06-08)
 
 - **Crate renamed from `proc-macro-error2` to `proc-macro-error3`.**
