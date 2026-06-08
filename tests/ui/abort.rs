@@ -1,4 +1,4 @@
-use proc_macro_error3_test_suite::*;
+use test_crate::*;
 
 abort_from!(one, two);
 abort_to_string!(one, two);

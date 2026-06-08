@@ -17,5 +17,3 @@ trololo
 RUSTFLAGS
 compl
 rustdoc
-taplo
-realpath

@@ -24,8 +24,8 @@ quote = "1.0.35"
 syn = { version = "2.0.46", optional = true, default-features = false }
 
 [dev-dependencies]
-proc-macro-error3-test-suite = { path = "./test-crate", version = "3" }
 syn = { version = "2.0.46", features = ["full"] }
+test-crate = { path = "./test-crate" }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]

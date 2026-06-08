@@ -1,4 +1,4 @@
-use proc_macro_error3_test_suite::*;
+use test_crate::*;
 
 to_tokens_span!(std::option::Option);
 

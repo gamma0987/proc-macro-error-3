@@ -1,4 +1,4 @@
-use proc_macro_error3_test_suite::*;
+use test_crate::*;
 
 explicit_span_range!(one, two, three, four);
 
