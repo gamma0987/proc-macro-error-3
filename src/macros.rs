@@ -1,5 +1,5 @@
 // FIXME: this can be greatly simplified via $()?
-// as soon as MRSV hits 1.32
+// as soon as MSRV hits 1.32
 
 /// Build [`Diagnostic`](struct.Diagnostic.html) instance from provided arguments.
 ///
