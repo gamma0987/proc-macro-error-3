@@ -17,7 +17,7 @@ path = "lib.rs"
 proc-macro = true
 
 [dependencies]
-proc-macro-error3 = { path = "../", version = "=3.0.1" }
+proc-macro-error3 = { path = "../", version = "3" }
 proc-macro2 = "1.0.74"
 quote = "1.0.35"
 syn = { version = "2.0.46", features = ["full"] }
