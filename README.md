@@ -1,3 +1,24 @@
+> **NOTE**
+>
+> This is a maintained fork of
+> [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2), which
+> itself was a fork of
+> [`proc-macro-error`](https://github.com/CreepySkeleton/proc-macro-error). The
+> goal is to keep the crate maintained while preserving the original API and
+> behavior as much as possible.
+>
+> Notable changes from `proc-macro-error` to `proc-macro-error-2`:
+>
+> - Upgraded `syn` to `2`.
+> - Raised the MSRV to `1.61`.
+> - Removed automatic nightly detection; use the `nightly` feature for improved
+>   diagnostics.
+>
+> Notable changes in this fork compared to `proc-macro-error-2`:
+>
+> - Fixed the future-incompatibility warning from
+>   [`rust-lang/rust#127909`](https://github.com/rust-lang/rust/issues/127909)
+
 # Makes error reporting in procedural macros nice and easy
 
 [![docs.rs](https://docs.rs/proc-macro-error3/badge.svg)](https://docs.rs/proc-macro-error3)
@@ -25,27 +46,6 @@ proc-macro-error3 = "3.0"
 ```
 
 _Supports rustc 1.61 and up_
-
-> **NOTE**
->
-> This is a maintained fork of
-> [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2), which
-> itself was a fork of
-> [`proc-macro-error`](https://github.com/CreepySkeleton/proc-macro-error). The
-> goal is to keep the crate maintained while preserving the original API and
-> behavior as much as possible.
->
-> Notable changes from `proc-macro-error` to `proc-macro-error-2`:
->
-> - Upgraded `syn` to `2`.
-> - Raised the MSRV to `1.61`.
-> - Removed automatic nightly detection; use the `nightly` feature for improved
->   diagnostics.
->
-> Notable changes in this fork compared to `proc-macro-error-2`:
->
-> - Fixed the future-incompatibility warning from
->   [`rust-lang/rust#127909`](https://github.com/rust-lang/rust/issues/127909)
 
 [Documentation and guide][guide]
 
