@@ -18,6 +18,11 @@
 >
 > - Fixed the future-incompatibility warning from
 >   [`rust-lang/rust#127909`](https://github.com/rust-lang/rust/issues/127909)
+> - [#3](https://github.com/gamma0987/proc-macro-error3/pull/3) Fixed the args
+>   expansion in macros missed the comma in the presence of trailing commas.
+> - [#4](https://github.com/gamma0987/proc-macro-error3/pull/4) Fixed panics
+>   when parsing `syn::Error` fails.
+> - The changelog contains all notable changes
 
 # Makes error reporting in procedural macros nice and easy
 
