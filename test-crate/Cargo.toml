@@ -4,9 +4,11 @@ version = "0.0.0"
 authors = [
   "CreepySkeleton <creepy-skeleton@yandex.ru>",
   "GnomedDev <david2005thomas@gmail.com>",
+  "gamma0987 <gamma0987@posteo.de>",
 ]
 edition = "2021"
 publish = false
+license = "MIT OR Apache-2.0"
 
 [lib]
 path = "lib.rs"

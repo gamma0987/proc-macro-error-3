@@ -18,3 +18,10 @@ RUSTFLAGS
 compl
 rustdoc
 taplo
+bumpversion
+dotgraphs
+dtolnay
+Justfile
+RUSTSEC
+Swatinem
+taiki
