@@ -115,12 +115,12 @@ test-doc:
 # Run the UI tests (Uses: 'cargo +stable')
 [group('test')]
 test-ui:
-    RUSTFLAGS='--cfg run_ui_tests' cargo +stable test ui
+    cargo +stable test --features __ui_tests ui
 
 # Run the UI tests and overwrite the error message fixtures (Uses: 'cargo +stable')
 [group('test')]
 test-ui-overwrite:
-    RUSTFLAGS='--cfg run_ui_tests' TRYBUILD=overwrite cargo +stable test ui
+    TRYBUILD=overwrite cargo +stable test --features __ui_tests ui
 
 # Test all packages (Uses: 'cargo')
 [group('test')]

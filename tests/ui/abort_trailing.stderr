@@ -1,0 +1,28 @@
+error: msg
+ --> tests/ui/abort_trailing.rs:3:17
+  |
+3 | abort_trailing!(one);
+  |                 ^^^
+
+error: fmt arg
+ --> tests/ui/abort_trailing.rs:4:21
+  |
+4 | abort_trailing_fmt!(one);
+  |                     ^^^
+
+error: msg
+
+         = help: note
+
+ --> tests/ui/abort_trailing.rs:5:23
+  |
+5 | abort_trailing_notes!(one, two);
+  |                       ^^^
+
+error: err
+ --> tests/ui/abort_trailing.rs:6:1
+  |
+6 | abort_trailing_from!(one);
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the macro `abort_trailing_from` (in Nightly builds, run with -Z macro-backtrace for more info)

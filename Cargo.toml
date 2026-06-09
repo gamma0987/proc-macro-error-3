@@ -29,12 +29,10 @@ test-crate = { path = "./test-crate" }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]
+__ui_tests = []
 default = ["syn-error"]
 nightly = []
 syn-error = ["dep:syn"]
-
-[lints.rust]
-unexpected_cfgs = { level = "warn", check-cfg = ['cfg(run_ui_tests)'] }
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }

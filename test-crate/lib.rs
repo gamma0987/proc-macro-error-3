@@ -41,6 +41,33 @@ pub fn abort_call_site_test(_: proc_macro::TokenStream) -> proc_macro::TokenStre
 
 #[proc_macro]
 #[proc_macro_error]
+pub fn abort_trailing(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let span = input.into_iter().next().unwrap().span();
+    abort!(span, "msg",)
+}
+
+#[proc_macro]
+#[proc_macro_error]
+pub fn abort_trailing_fmt(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let span = input.into_iter().next().unwrap().span();
+    abort!(span, "fmt {}", "arg",)
+}
+
+#[proc_macro]
+#[proc_macro_error]
+pub fn abort_trailing_notes(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let span = input.into_iter().next().unwrap().span();
+    abort!(span, "msg",; help = "note",)
+}
+
+#[proc_macro]
+#[proc_macro_error]
+pub fn abort_trailing_from(_: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    abort!(syn::Error::new(proc_macro2::Span::call_site(), "err"),)
+}
+
+#[proc_macro]
+#[proc_macro_error]
 pub fn direct_abort(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let span = input.into_iter().next().unwrap().span();
     Diagnostic::spanned(span.into(), Level::Error, "Diagnostic::abort() test".into()).abort()
@@ -272,4 +299,42 @@ pub fn children_messages(input: proc_macro::TokenStream) -> proc_macro::TokenStr
     let child = syn::Error::new(spans.next().unwrap().into(), "child syn::Error");
     main.combine(child);
     Diagnostic::from(main).abort()
+}
+
+#[proc_macro]
+#[proc_macro_error]
+pub fn trailing_commas(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let span = input.into_iter().next().unwrap().span();
+    let some_note: Option<&str> = Some("note");
+
+    // diagnostic! arms with trailing commas
+    let _ = diagnostic!(Diagnostic::spanned(
+        span.into(),
+        Level::Warning,
+        "test".to_owned()
+    ),);
+    let _ = diagnostic!(span, Level::Warning, "msg",);
+    let _ = diagnostic!(span, Level::Warning, "fmt {}", "arg",);
+    let _ = diagnostic!(span, Level::Warning, "msg",; help = "note");
+    let _ = diagnostic!(span, Level::Warning, "fmt {}", "arg",; help = "note");
+
+    // __pme__suggestions trailing commas
+    let _ = diagnostic!(span, Level::Warning, "msg"; help = "simple",);
+    let _ = diagnostic!(span, Level::Warning, "msg"; help = "fmt {}", "arg",);
+    let _ = diagnostic!(span, Level::Warning, "msg"; help = span => "spanned",);
+    let _ = diagnostic!(span, Level::Warning, "msg"; help = span => "fmt {}", "arg",);
+    let _ = diagnostic!(span, Level::Warning, "msg"; help =? some_note,);
+    let _ = diagnostic!(span, Level::Warning, "msg"; help =? span => some_note,);
+
+    // __pme__suggestions continuation with trailing comma before ;
+    let _ = diagnostic!(span, Level::Warning, "msg"; help =? some_note,; help = "next");
+    let _ = diagnostic!(span, Level::Warning, "msg"; help =? span => some_note,; help = "next");
+    let _ = diagnostic!(span, Level::Warning, "fmt {}", "arg",; help = "fmt2 {}", "arg2",; help = "next");
+    let _ = diagnostic!(span, Level::Warning, "msg",; help = span => "note",; help = "next");
+    let _ =
+        diagnostic!(span, Level::Warning, "msg",; help = span => "fmt {}", "arg",; help = "next");
+
+    emit_warning!(span, "msg",);
+
+    quote!().into()
 }
