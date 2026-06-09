@@ -1,4 +1,4 @@
-> **NOTE**
+> [!NOTE]
 >
 > This is a maintained fork of
 > [`proc-macro-error-2`](https://github.com/GnomedDev/proc-macro-error-2), which
