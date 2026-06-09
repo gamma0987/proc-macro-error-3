@@ -65,9 +65,12 @@ jobs:
           - toolchain: stable
             recipe: lint
           - toolchain: "1.61.0"
-            recipe: msrv-check
+            recipe: lint-msrv
     steps:
       - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: clippy
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -77,6 +80,7 @@ jobs:
           cache-bin: false
           key: ${{ matrix.toolchain }}
       - uses: taiki-e/install-action@just
+      - run: just update-dependencies
       - run: just ${{ matrix.recipe }}
 
   test:
