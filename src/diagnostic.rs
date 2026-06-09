@@ -298,36 +298,34 @@ impl From<syn::Error> for Diagnostic {
 
         fn gut_error(ts: &mut impl Iterator<Item = TokenTree>) -> Option<(SpanRange, String)> {
             let start_span = ts.next()?.span();
-            ts.next().expect(":1");
-            ts.next().expect("core");
-            ts.next().expect(":2");
-            ts.next().expect(":3");
-            ts.next().expect("compile_error");
-            ts.next().expect("!");
 
-            let lit = match ts.next().unwrap() {
-                TokenTree::Group(group) => {
-                    // Currently `syn` builds `compile_error!` invocations
-                    // exclusively in `ident{"..."}` (braced) form which is not
-                    // followed by `;` (semicolon).
-                    //
-                    // But if it changes to `ident("...");` (parenthesized)
-                    // or `ident["..."];` (bracketed) form,
-                    // we will need to skip the `;` as well.
-                    // Highly unlikely, but better safe than sorry.
+            // Skip `:: core : compile_error !`
+            for _ in 0..6 {
+                ts.next()?;
+            }
 
-                    if group.delimiter() == Delimiter::Parenthesis
-                        || group.delimiter() == Delimiter::Bracket
-                    {
-                        ts.next().unwrap(); // ;
-                    }
+            let group = match ts.next()? {
+                TokenTree::Group(group) => group,
+                _ => return None,
+            };
 
-                    match group.stream().into_iter().next().unwrap() {
-                        TokenTree::Literal(lit) => lit,
-                        _ => unreachable!(""),
-                    }
-                }
-                _ => unreachable!(""),
+            // Currently `syn` builds `compile_error!` invocations
+            // exclusively in `ident{"..."}` (braced) form which is not
+            // followed by `;` (semicolon).
+            //
+            // But if it changes to `ident("...");` (parenthesized)
+            // or `ident["..."];` (bracketed) form,
+            // we will need to skip the `;` as well.
+            // Highly unlikely, but better safe than sorry.
+            if group.delimiter() == Delimiter::Parenthesis
+                || group.delimiter() == Delimiter::Bracket
+            {
+                ts.next()?;
+            }
+
+            let lit = match group.stream().into_iter().next()? {
+                TokenTree::Literal(lit) => lit,
+                _ => return None,
             };
 
             let last = lit.span();
@@ -348,7 +346,13 @@ impl From<syn::Error> for Diagnostic {
 
         let mut ts = err.to_compile_error().into_iter();
 
-        let (span_range, msg) = gut_error(&mut ts).unwrap();
+        let (span_range, msg) = match gut_error(&mut ts) {
+            Some(parsed) => parsed,
+            None => {
+                return Diagnostic::new(Level::Error, err.to_string());
+            }
+        };
+
         let mut res = Diagnostic::spanned_range(span_range, Level::Error, msg);
 
         while let Some((span_range, msg)) = gut_error(&mut ts) {

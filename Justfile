@@ -62,8 +62,8 @@ check-fmt-all: check-fmt check-fmt-toml check-fmt-prettier check-spelling
 # Run clippy (Uses: 'cargo +stable')
 [group('lint')]
 lint:
-    cargo +stable clippy --all-targets -- -D warnings
-    cargo +nightly clippy --features nightly --all-targets -- -D warnings
+    cargo +stable clippy --features syn-error,__ui_tests --all-targets -- -D warnings
+    cargo +nightly clippy --features nightly,syn-error,__ui_tests --all-targets -- -D warnings
 
 # Check minimal supported Rust version (Uses: 'cargo +{{ msrv }}')
 [group('lint')]
