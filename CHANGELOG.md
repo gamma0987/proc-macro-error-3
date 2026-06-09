@@ -1,3 +1,16 @@
+# v3.0.2 (2026-06-09)
+
+- ([#3]): Fixed expansion of args without comma in trailing args branches and
+  replaced macro arms differing only in trailing comma with `$(,)*`
+- ([#4]): Fixed potential panic inside a proc macro if
+  `syn::Error::to_compile_error()` ever changes its token layout. The
+  `From<syn::Error>` implementation now gracefully falls back to a
+  call-site-spanned error message instead of panicking via
+  `expect()`/`unwrap()`/`unreachable!()`.
+
+[#3]: (https://github.com/gamma0987/proc-macro-error3/pull/3)
+[#4]: (https://github.com/gamma0987/proc-macro-error3/pull/4)
+
 # v3.0.1 (2026-06-08)
 
 - Fix broken links in cargo metadata and README
