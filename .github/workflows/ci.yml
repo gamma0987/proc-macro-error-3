@@ -3,35 +3,108 @@ on:
   push:
 
 jobs:
-  test:
+  deny:
+    name: Check dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rust-version: ["stable", "beta", "nightly"]
-
+        checks:
+          - "--deny warnings advisories"
+          - bans licenses sources
     steps:
       - uses: actions/checkout@v6
-      - run: rustup toolchain install ${{ matrix.rust-version }}
-      - run: cargo +${{ matrix.rust-version }} test --all
-      - run: cargo +nightly test --all --features nightly
-        if: matrix.rust-version == 'nightly'
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check ${{ matrix.checks }}
 
-  msrv-check:
+  minimal_versions:
+    name: Check minimal version requirements of dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain:
+          - stable
+          - nightly
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-bin: false
+          key: ${{ matrix.toolchain }}
+      - uses: taiki-e/install-action@cargo-hack
+      - uses: taiki-e/install-action@cargo-minimal-versions
+      - uses: taiki-e/install-action@just
+      - name: Check build with minimal versions
+        run: just minimal-versions
+
+  format:
+    name: Check format and spelling
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: rustup toolchain install 1.61 stable
-      - run: CARGO_RESOLVER_INCOMPATIBLE_RUST_VERSIONS=fallback cargo +stable update
-      - run: cargo +1.61 check --all
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-bin: false
+      - uses: taiki-e/install-action@just
+      - uses: taiki-e/install-action@taplo
+      - run: just check-fmt-all
+
+  lint:
+    name: Run lints
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - toolchain: stable
+            recipe: lint
+          - toolchain: "1.61.0"
+            recipe: msrv-check
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-bin: false
+          key: ${{ matrix.toolchain }}
+      - uses: taiki-e/install-action@just
+      - run: just ${{ matrix.recipe }}
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [deny, minimal_versions, format, lint]
+    strategy:
+      matrix:
+        toolchain: ["stable", "beta", "nightly"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-bin: false
+          key: ${{ matrix.toolchain }}
+      - run: cargo test --all
+      - run: cargo test --all --features nightly
+        if: matrix.toolchain == 'nightly'
 
   ui-test:
     runs-on: ubuntu-latest
+    needs: [deny, minimal_versions, format, lint]
     steps:
       - uses: actions/checkout@v6
-      - run: cargo +stable test --features __ui_tests ui
-
-  test-fmt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - run: cargo fmt --check --all
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-bin: false
+      - run: cargo test --features __ui_tests ui
