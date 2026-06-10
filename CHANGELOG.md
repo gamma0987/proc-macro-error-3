@@ -1,3 +1,27 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+This is the combined CHANGELOG for all packages: `proc-macro-error3` and
+`proc-macro-error-attr3`. They both use the same version which is the version
+used in this file.
+
+The original project
+[proc-macro-error](https://github.com/CrrepySkeleton/proc-macro-error) was
+created and maintained up to version 1.0.4 by @CreepySkeleton. Due to the old
+maintainer's inactivity, the project was renamed to
+[proc-macro-error2](https://github.com/GnomedDev/proc-macro-error-2) and
+maintained by @GnomedDev from version 2.0.0 up to version 2.0.1.
+proc-macro-error2 was archived by the owner on 2026-06-07 and declared
+unmaintained in RUSTSEC-2026-0173. From version 3.0.0 (2026-06-08) onwards the
+project was renamed to
+[proc-macro-error3](https://github.com/gamma0987/proc-macro-error3) and is
+actively maintained by @gamma0987.
+
+The CHANGELOG format is based on
+[Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres
+to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
 # v3.0.2 (2026-06-09)
 
 - ([#3]): Fixed expansion of args without comma in trailing args branches and
