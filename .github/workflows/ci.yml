@@ -14,7 +14,7 @@ jobs:
           - "--deny warnings advisories"
           - bans licenses sources
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: EmbarkStudios/cargo-deny-action@v2
         with:
           command: check ${{ matrix.checks }}
@@ -29,7 +29,7 @@ jobs:
           - stable
           - nightly
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -47,7 +47,7 @@ jobs:
     name: Check format and spelling
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt
@@ -69,7 +69,7 @@ jobs:
           - toolchain: "1.61.0"
             recipe: lint-msrv
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@nightly
         with:
           components: clippy
@@ -92,7 +92,7 @@ jobs:
       matrix:
         toolchain: ["stable", "beta", "nightly"]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deny, minimal_versions, format, lint]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
