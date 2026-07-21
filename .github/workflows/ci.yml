@@ -100,6 +100,7 @@ jobs:
         with:
           cache-bin: false
           key: ${{ matrix.toolchain }}
+      - run: just update-dependencies
       - run: cargo test --all
       - run: cargo test --all --features nightly
         if: matrix.toolchain == 'nightly'
@@ -113,4 +114,5 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           cache-bin: false
+      - run: just update-dependencies
       - run: cargo test --features __ui_tests ui
