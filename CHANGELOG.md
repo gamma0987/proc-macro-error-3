@@ -18,9 +18,16 @@ project was renamed to
 [proc-macro-error3](https://github.com/gamma0987/proc-macro-error3) and is
 actively maintained by @gamma0987.
 
-The CHANGELOG format is based on
-[Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres
-to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+This project adheres to
+[Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+# v3.0.3 (2026-07-23)
+
+- ([#10]): Add support for `syn` 3.x. The `syn::Error` output used by this crate
+  remains compatible with 2.x, so no code changes within this crate were
+  required.
+
+[#10]: (https://github.com/gamma0987/proc-macro-error3/pull/10)
 
 # v3.0.2 (2026-06-09)
 
