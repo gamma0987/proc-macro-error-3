@@ -54,8 +54,8 @@ proc-macro-error3 = "3.0"
 ```
 
 By default this enables the `syn3-error` feature, which provides
-`From<syn::Error>` for this crate's `Diagnostic`. If your crate still uses
-`syn` v2, disable default features and opt into `syn2-error` instead:
+`From<syn::Error>` for this crate's `Diagnostic`. If your crate still uses `syn`
+v2, disable default features and opt into `syn2-error` instead:
 
 ```toml
 [dependencies]
