@@ -22,6 +22,9 @@
 >   expansion in macros missed the comma in the presence of trailing commas.
 > - [#4](https://github.com/gamma0987/proc-macro-error3/pull/4) Fixed panics
 >   when parsing `syn::Error` fails.
+> - Supports `syn` v2 and `syn` v3 error conversion behind explicit Cargo
+>   features. `syn3-error` is enabled by default; `syn2-error` is available for
+>   crates that still parse with `syn` 2.
 > - The changelog contains all notable changes
 
 # Makes error reporting in procedural macros nice and easy
@@ -49,6 +52,19 @@ future-proof.
 [dependencies]
 proc-macro-error3 = "3.0"
 ```
+
+By default this enables the `syn3-error` feature, which provides
+`From<syn::Error>` for this crate's [`Diagnostic`]. If your crate still uses
+`syn` v2, disable default features and opt into `syn2-error` instead:
+
+```toml
+[dependencies]
+proc-macro-error3 = { version = "3.0", default-features = false, features = ["syn2-error"] }
+```
+
+The legacy `syn-error` feature remains available as an alias for `syn3-error`.
+Disable default features entirely if you do not need any `syn::Error` conversion
+support.
 
 _Supports rustc 1.61 and up_
 

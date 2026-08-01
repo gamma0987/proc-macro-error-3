@@ -15,16 +15,25 @@
 //!
 //! ## Cargo features
 //!
-//! This crate provides *enabled by default* `syn-error` feature that gates
-//! `impl From<syn::Error> for Diagnostic` conversion. If you don't use `syn` and want
-//! to cut off some of compilation time, you can disable it via
+//! This crate enables the `syn3-error` feature by default, providing `impl From<syn::Error> for
+//! Diagnostic` conversion with `syn` v3. The legacy `syn-error` feature is an alias for
+//! `syn3-error`. Crates that still parse with `syn` v2 can disable default features and opt into
+//! `syn2-error` instead:
+//!
+//! ```toml
+//! [dependencies]
+//! proc-macro-error3 = { version = "3.0", default-features = false, features = ["syn2-error"] }
+//! ```
+//!
+//! If you don't use `syn` and want to cut off some compilation time, you can disable `syn`
+//! integrations by disabling default features
 //!
 //! ```toml
 //! [dependencies]
 //! proc-macro-error3 = { version = "3.0", default-features = false }
 //! ```
 //!
-//! ***Please note that disabling this feature makes sense only if you don't depend on `syn`
+//! ***Please note that disabling these features makes sense only if you don't depend on `syn`
 //! directly or indirectly, and you very likely do.**
 //!
 //! ## Real world examples
@@ -207,10 +216,11 @@
 //! > on it but rather use it directly:
 //! > ```no_run
 //! > # use proc_macro_error3::abort;
-//! > # let input = proc_macro2::TokenStream::new();
-//! > let ty: syn::Type = syn::parse2(input).unwrap();
-//! > abort!(ty, "BOOM");
-//! > //     ^^ <-- avoid .span()
+//! > # #[cfg(all(feature = "syn2-error", not(feature = "syn3-error")))] use syn2 as syn;
+//! > # #[cfg(feature = "syn3-error")] use syn3 as syn;
+//! > let err = syn::Error::new(proc_macro2::Span::call_site(), "bad input");
+//! > abort!(err);
+//! > //     ^^^ <-- avoid .span()
 //! > ```
 //! >
 //! > `.span()` calls work too, but you may experience regressions in message quality.

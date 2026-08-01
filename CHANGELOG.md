@@ -21,6 +21,13 @@ actively maintained by @gamma0987.
 This project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+# Unreleased
+
+- Split `syn::Error` conversion support into explicit `syn2-error` (using `syn`
+  v2) and `syn3-error` (using `syn` v3) Cargo features. `syn3-error` remains
+  enabled by default, and the legacy `syn-error` feature remains available as a
+  compatibility alias for `syn3-error`.
+
 # v3.0.3 (2026-07-23)
 
 - ([#10]): Add support for `syn` 3.x. The `syn::Error` output used by this crate
