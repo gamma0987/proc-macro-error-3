@@ -19,20 +19,23 @@ edition = "2021"
 
 [dependencies]
 proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.0.3" }
-proc-macro2 = "1.0.74"
+proc-macro2 = "1.0.91"
 quote = "1.0.35"
-syn = { version = ">=2.0.46,<4", optional = true, default-features = false }
+syn2 = { package = "syn", version = "2.0.46", optional = true, default-features = false }
+syn3 = { package = "syn", version = "3", optional = true, default-features = false }
 
 [dev-dependencies]
-syn = { version = ">=2.0.46,<4", features = ["full"] }
+syn3 = { package = "syn", version = "3", features = ["full"] }
 test-crate = { path = "./test-crate" }
 trybuild = { version = "1.0.99", features = ["diff"] }
 
 [features]
 __ui_tests = []
-default = ["syn-error"]
+default = ["syn3-error"]
 nightly = []
-syn-error = ["dep:syn"]
+syn-error = ["syn3-error"]
+syn2-error = ["dep:syn2"]
+syn3-error = ["dep:syn3"]
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }

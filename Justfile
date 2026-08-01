@@ -68,7 +68,8 @@ lint:
 # Check minimal supported Rust version (Uses: 'cargo +{{ msrv }}')
 [group('lint')]
 lint-msrv:
-    cargo +{{ msrv }} check --all
+    cargo +{{ msrv }} check --package proc-macro-error3 --lib \
+        --no-default-features --features syn2-error
 
 # Run cargo deny check (Uses: 'cargo-deny')
 [group('dependencies')]
@@ -112,6 +113,17 @@ test-doc:
     DOCS_RS=1 cargo test --doc
     DOCS_RS=1 cargo +nightly test --features nightly --doc
 
+# Check supported syn feature combinations (Uses: 'cargo')
+[group('test')]
+test-features:
+    cargo check -p proc-macro-error3 --lib --no-default-features
+    cargo check -p proc-macro-error3 --lib --no-default-features --features syn2-error
+    cargo check -p proc-macro-error3 --lib --no-default-features --features syn3-error
+    cargo check -p proc-macro-error3 --lib --no-default-features --features syn2-error,syn3-error
+    DOCS_RS=1 cargo test -p proc-macro-error3 --doc --no-default-features --features syn2-error
+    DOCS_RS=1 cargo test -p proc-macro-error3 --doc --no-default-features --features syn3-error
+    DOCS_RS=1 cargo test -p proc-macro-error3 --doc --no-default-features --features syn2-error,syn3-error
+
 # Run the UI tests (Uses: 'cargo +stable')
 [group('test')]
 test-ui:
@@ -124,5 +136,5 @@ test-ui-overwrite:
 
 # Test all packages (Uses: 'cargo')
 [group('test')]
-test-all: test-ui test-nightly test-doc
+test-all: test-ui test-nightly test-doc test-features
     cargo test --all

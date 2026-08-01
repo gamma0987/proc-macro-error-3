@@ -291,74 +291,86 @@ impl SuggestionKind {
     }
 }
 
-#[cfg(feature = "syn-error")]
-impl From<syn::Error> for Diagnostic {
-    fn from(err: syn::Error) -> Self {
-        use proc_macro2::{Delimiter, TokenTree};
+#[cfg(feature = "syn2-error")]
+impl From<syn2::Error> for Diagnostic {
+    fn from(err: syn2::Error) -> Self {
+        let tokens = err.to_compile_error();
+        from_compile_error(tokens, err.to_string())
+    }
+}
 
-        fn gut_error(ts: &mut impl Iterator<Item = TokenTree>) -> Option<(SpanRange, String)> {
-            let start_span = ts.next()?.span();
+#[cfg(feature = "syn3-error")]
+impl From<syn3::Error> for Diagnostic {
+    fn from(err: syn3::Error) -> Self {
+        let tokens = err.to_compile_error();
+        from_compile_error(tokens, err.to_string())
+    }
+}
 
-            // Skip `:: core : compile_error !`
-            for _ in 0..6 {
-                ts.next()?;
-            }
+#[cfg(any(feature = "syn2-error", feature = "syn3-error"))]
+fn from_compile_error(tokens: TokenStream, fallback_message: String) -> Diagnostic {
+    use proc_macro2::{Delimiter, TokenTree};
 
-            let group = match ts.next()? {
-                TokenTree::Group(group) => group,
-                _ => return None,
-            };
+    fn gut_error(ts: &mut impl Iterator<Item = TokenTree>) -> Option<(SpanRange, String)> {
+        let start_span = ts.next()?.span();
 
-            // Currently `syn` builds `compile_error!` invocations
-            // exclusively in `ident{"..."}` (braced) form which is not
-            // followed by `;` (semicolon).
-            //
-            // But if it changes to `ident("...");` (parenthesized)
-            // or `ident["..."];` (bracketed) form,
-            // we will need to skip the `;` as well.
-            // Highly unlikely, but better safe than sorry.
-            if group.delimiter() == Delimiter::Parenthesis
-                || group.delimiter() == Delimiter::Bracket
-            {
-                ts.next()?;
-            }
-
-            let lit = match group.stream().into_iter().next()? {
-                TokenTree::Literal(lit) => lit,
-                _ => return None,
-            };
-
-            let last = lit.span();
-            let mut msg = lit.to_string();
-
-            // "abc" => abc
-            msg.pop();
-            msg.remove(0);
-
-            Some((
-                SpanRange {
-                    first: start_span,
-                    last,
-                },
-                msg,
-            ))
+        // Skip `:: core : compile_error !`
+        for _ in 0..6 {
+            ts.next()?;
         }
 
-        let mut ts = err.to_compile_error().into_iter();
-
-        let (span_range, msg) = match gut_error(&mut ts) {
-            Some(parsed) => parsed,
-            None => {
-                return Diagnostic::new(Level::Error, err.to_string());
-            }
+        let group = match ts.next()? {
+            TokenTree::Group(group) => group,
+            _ => return None,
         };
 
-        let mut res = Diagnostic::spanned_range(span_range, Level::Error, msg);
-
-        while let Some((span_range, msg)) = gut_error(&mut ts) {
-            res = res.span_range_error(span_range, msg);
+        // Currently `syn` builds `compile_error!` invocations
+        // exclusively in `ident{"..."}` (braced) form which is not
+        // followed by `;` (semicolon).
+        //
+        // But if it changes to `ident("...");` (parenthesized)
+        // or `ident["..."];` (bracketed) form,
+        // we will need to skip the `;` as well.
+        // Highly unlikely, but better safe than sorry.
+        if group.delimiter() == Delimiter::Parenthesis || group.delimiter() == Delimiter::Bracket {
+            ts.next()?;
         }
 
-        res
+        let lit = match group.stream().into_iter().next()? {
+            TokenTree::Literal(lit) => lit,
+            _ => return None,
+        };
+
+        let last = lit.span();
+        let mut msg = lit.to_string();
+
+        // "abc" => abc
+        msg.pop();
+        msg.remove(0);
+
+        Some((
+            SpanRange {
+                first: start_span,
+                last,
+            },
+            msg,
+        ))
     }
+
+    let mut ts = tokens.into_iter();
+
+    let (span_range, msg) = match gut_error(&mut ts) {
+        Some(parsed) => parsed,
+        None => {
+            return Diagnostic::new(Level::Error, fallback_message);
+        }
+    };
+
+    let mut res = Diagnostic::spanned_range(span_range, Level::Error, msg);
+
+    while let Some((span_range, msg)) = gut_error(&mut ts) {
+        res = res.span_range_error(span_range, msg);
+    }
+
+    res
 }
