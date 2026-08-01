@@ -23,10 +23,15 @@ This project adheres to
 
 # Unreleased
 
-- Split `syn::Error` conversion support into explicit `syn2-error` (using `syn`
-  v2) and `syn3-error` (using `syn` v3) Cargo features. `syn3-error` remains
-  enabled by default, and the legacy `syn-error` feature remains available as a
-  compatibility alias for `syn3-error`.
+# v3.1.0 (2026-08-01)
+
+- ([#12]): Split `syn::Error` conversion support into explicit `syn2-error`
+  (using `syn` v2) and `syn3-error` (using `syn` v3) Cargo features.
+  `syn3-error` remains enabled by default, and the legacy `syn-error` feature
+  remains available as a compatibility alias for `syn3-error`.
+- ([#12]): Bump minimal version of `proc-macro2` to 1.0.91.
+
+[#12]: (https://github.com/gamma0987/proc-macro-error3/pull/12)
 
 # v3.0.3 (2026-07-23)
 
