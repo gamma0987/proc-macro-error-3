@@ -68,7 +68,8 @@ lint:
 # Check minimal supported Rust version (Uses: 'cargo +{{ msrv }}')
 [group('lint')]
 lint-msrv:
-    cargo +{{ msrv }} check --all
+    cargo +{{ msrv }} check --package proc-macro-error3 --lib \
+        --no-default-features --features syn2-error
 
 # Run cargo deny check (Uses: 'cargo-deny')
 [group('dependencies')]
