@@ -16,7 +16,7 @@ proc-macro = true
 
 [dependencies]
 proc-macro-error3 = { path = "../" }
-proc-macro2 = "1.0.74"
+proc-macro2 = "1.0.91"
 quote = "1.0.35"
 syn = { version = "3", features = ["full"] }
 
