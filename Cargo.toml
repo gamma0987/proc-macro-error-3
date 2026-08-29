@@ -16,6 +16,20 @@ keywords = ["proc-macro", "error", "errors"]
 categories = ["development-tools::procedural-macro-helpers"]
 license = "MIT OR Apache-2.0"
 edition = "2021"
+exclude = [
+    "/.bumpversion/",
+    "/cspell.json",
+    "/deny.toml",
+    "/.dicts/",
+    "/.editorconfig",
+    "/.github/",
+    "/.gitignore",
+    "/Justfile",
+    "/.markdownlint.json",
+    "/.prettierrc.toml",
+    "/renovate.json",
+    "/.taplo.toml",
+]
 
 [dependencies]
 proc-macro-error-attr3 = { path = "./proc-macro-error-attr", version = "=3.1.0" }
