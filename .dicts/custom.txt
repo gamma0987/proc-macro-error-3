@@ -25,3 +25,4 @@ Justfile
 RUSTSEC
 Swatinem
 taiki
+musicinmybrain
