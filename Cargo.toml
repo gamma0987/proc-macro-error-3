@@ -17,18 +17,18 @@ categories = ["development-tools::procedural-macro-helpers"]
 license = "MIT OR Apache-2.0"
 edition = "2021"
 exclude = [
-    "/.bumpversion/",
-    "/cspell.json",
-    "/deny.toml",
-    "/.dicts/",
-    "/.editorconfig",
-    "/.github/",
-    "/.gitignore",
-    "/Justfile",
-    "/.markdownlint.json",
-    "/.prettierrc.toml",
-    "/renovate.json",
-    "/.taplo.toml",
+  "/.bumpversion/",
+  "/cspell.json",
+  "/deny.toml",
+  "/.dicts/",
+  "/.editorconfig",
+  "/.github/",
+  "/.gitignore",
+  "/Justfile",
+  "/.markdownlint.json",
+  "/.prettierrc.toml",
+  "/renovate.json",
+  "/.taplo.toml",
 ]
 
 [dependencies]
