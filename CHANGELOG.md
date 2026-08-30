@@ -23,6 +23,12 @@ This project adheres to
 
 # Unreleased
 
+# v3.1.1 (2026-08-30)
+
+- ([#16]): Exclude some files from published crates. Thanks to @musicinmybrain
+
+[#16]: (https://github.com/gamma0987/proc-macro-error3/pull/16)
+
 # v3.1.0 (2026-08-01)
 
 - ([#12]): Split `syn::Error` conversion support into explicit `syn2-error`
